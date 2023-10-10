@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Telegram\Bot\FileUpload\InputFile;
 use Telegram\Bot\Laravel\Facades\Telegram;
 
 /*
@@ -15,7 +16,8 @@ use Telegram\Bot\Laravel\Facades\Telegram;
 */
 
 Route::get('/', function () {
-    return dd($response = Telegram::bot('mybot')->getMe());
+    $response = Telegram::bot('mybot')->getMe();
+    return dd($response);
 });
 
 Route::get('/chat', function () {
@@ -25,9 +27,30 @@ Route::get('/chat', function () {
 Route::post('/send-chat', function () {
     $response = Telegram::sendMessage([
         'chat_id' => env('CHANNEL_ID'),
-        'text' => 'Halo Nyoba kirim teks'
+        'text' => request()->input('message'),
     ]);
 
-    $messageId = $response->getMessageId();
-    return dd($messageId);
+    // dd($response->getMessageId());
+    return "Text sudah dikirim";
+});
+
+Route::get('/file', function () {
+    return view('file');
+});
+
+Route::post('/send-file', function () {
+    $caption = request()->input('caption');
+    $photo = request()->file('photo');
+
+    if ($photo->isValid()) {
+        $response = Telegram::sendPhoto([
+            'chat_id' => env('CHANNEL_ID'),
+            'photo' => InputFile::create($photo->getPathname(), $photo->getClientOriginalName()),
+            'caption' => $caption,
+        ]);
+
+        return "Foto berhasil dikirim ke channel Telegram dengan caption.";
+    } else {
+        return "Gagal mengunggah foto.";
+    }
 });
