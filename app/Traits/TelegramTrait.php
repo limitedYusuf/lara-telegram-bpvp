@@ -230,4 +230,18 @@ trait TelegramTrait
 
       return $response->json();
    }
+
+   public function copyMessage($chatId, $fromChatId, $messageId, $caption = '')
+   {
+      $url = $this->getApiUrl() . '/copyMessage';
+
+      $response = Http::post($url, [
+         'chat_id' => $chatId,
+         'from_chat_id' => $fromChatId,
+         'message_id' => $messageId,
+         'caption' => $caption,
+      ]);
+
+      return $response->json();
+   }
 }
