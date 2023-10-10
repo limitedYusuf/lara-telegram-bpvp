@@ -401,4 +401,17 @@ trait TelegramTrait
 
       return $response->json();
    }
+
+   public function forwardMessage($chatId, $fromChatId, $messageId)
+   {
+      $url = $this->getApiUrl() . '/forwardMessage';
+
+      $response = Http::post($url, [
+         'chat_id' => $chatId,
+         'from_chat_id' => $fromChatId,
+         'message_id' => $messageId,
+      ]);
+
+      return $response->json();
+   }
 }
