@@ -459,4 +459,19 @@ trait TelegramTrait
 
       return $response->json();
    }
+
+   public function setChatPhoto($chatId, $photo)
+   {
+      $url = $this->getApiUrl() . '/setChatPhoto';
+
+      $response = Http::attach(
+         'photo',
+         file_get_contents($photo),
+         basename($photo)
+      )->post($url, [
+         'chat_id' => $chatId,
+      ]);
+
+      return $response->json();
+   }
 }
