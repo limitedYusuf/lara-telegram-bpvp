@@ -314,4 +314,19 @@ trait TelegramTrait
 
       return $response->json();
    }
+
+   public function sendSticker($chatId, $sticker)
+   {
+      $url = $this->getApiUrl() . '/sendSticker';
+
+      $response = Http::attach(
+         'sticker',
+         file_get_contents($sticker),
+         basename($sticker)
+      )->post($url, [
+         'chat_id' => $chatId,
+      ]);
+
+      return $response->json();
+   }
 }
