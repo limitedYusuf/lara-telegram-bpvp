@@ -265,4 +265,16 @@ trait TelegramTrait
 
       return $response->json();
    }
+
+   public function sendDice($chatId, $emoji = '🎲')
+   {
+      $url = $this->getApiUrl() . '/sendDice';
+
+      $response = Http::post($url, [
+         'chat_id' => $chatId,
+         'emoji' => $emoji,
+      ]);
+
+      return $response->json();
+   }
 }
