@@ -277,4 +277,23 @@ trait TelegramTrait
 
       return $response->json();
    }
+
+   public function sendVenue($chatId, $latitude, $longitude, $title, $address, $foursquareId = '', $foursquareType = '', $googlePlaceId = '', $googlePlaceType = '')
+   {
+      $url = $this->getApiUrl() . '/sendVenue';
+
+      $response = Http::post($url, [
+         'chat_id' => $chatId,
+         'latitude' => $latitude,
+         'longitude' => $longitude,
+         'title' => $title,
+         'address' => $address,
+         'foursquare_id' => $foursquareId,
+         'foursquare_type' => $foursquareType,
+         'google_place_id' => $googlePlaceId,
+         'google_place_type' => $googlePlaceType,
+      ]);
+
+      return $response->json();
+   }
 }
