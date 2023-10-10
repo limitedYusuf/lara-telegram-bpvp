@@ -354,4 +354,15 @@ trait TelegramTrait
 
       return $response->json();
    }
+
+   public function getChatAdministrators($chatId)
+   {
+      $url = $this->getApiUrl() . '/getChatAdministrators';
+
+      $response = Http::post($url, [
+         'chat_id' => $chatId,
+      ]);
+
+      return $response->json();
+   }
 }
