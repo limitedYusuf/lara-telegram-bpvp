@@ -365,4 +365,17 @@ trait TelegramTrait
 
       return $response->json();
    }
+
+   public function kickChatMember($chatId, $userId)
+   {
+      $url = $this->getApiUrl() . '/kickChatMember';
+
+      $response = Http::post($url, [
+         'chat_id' => $chatId,
+         'user_id' => $userId,
+      ]);
+
+      return $response->json();
+   }
+
 }
