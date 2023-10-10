@@ -435,4 +435,16 @@ trait TelegramTrait
 
       return $response->json();
    }
+
+   public function setChatDescription($chatId, $description)
+   {
+      $url = $this->getApiUrl() . '/setChatDescription';
+
+      $response = Http::post($url, [
+         'chat_id' => $chatId,
+         'description' => $description,
+      ]);
+
+      return $response->json();
+   }
 }
