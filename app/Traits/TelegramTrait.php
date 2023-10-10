@@ -120,6 +120,24 @@ trait TelegramTrait
       return $response->json();
    }
 
+   public function sendAudio($chatId, $audio, $caption = '')
+   {
+      $url = $this->getApiUrl() . '/sendAudio';
+
+      $originalName = pathinfo($audio->getClientOriginalName(), PATHINFO_FILENAME);
+
+      $response = Http::attach(
+         'audio',
+         file_get_contents($audio),
+         $originalName . '.' . $audio->getClientOriginalExtension()
+      )->post($url, [
+         'chat_id' => $chatId,
+         'caption' => $caption,
+      ]);
+
+      return $response->json();
+   }
+
    public function sendLocation($chatId, $latitude, $longitude, $caption = '')
    {
       $url = $this->getApiUrl() . '/sendLocation';
