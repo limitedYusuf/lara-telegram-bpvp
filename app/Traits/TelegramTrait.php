@@ -148,7 +148,7 @@ trait TelegramTrait
       return $response->json();
    }
 
-   public function sendPoll($chatId, $question, $options)
+   public function sendPollV1($chatId, $question, $options)
    {
       $url = $this->getApiUrl() . '/sendPoll';
 
@@ -156,6 +156,27 @@ trait TelegramTrait
          'chat_id' => $chatId,
          'question' => $question,
          'options' => json_encode($options),
+      ]);
+
+      return $response->json();
+   }
+
+   public function sendPollV2($chatId, $question, $options, $isAnonymous = false, $type = 'regular', $allowsMultipleAnswers = false, $correctOptionId = null, $explanation = '', $explanationParseMode = '', $openPeriod = null, $closeDate = null)
+   {
+      $url = $this->getApiUrl() . '/sendPoll';
+
+      $response = Http::post($url, [
+         'chat_id' => $chatId,
+         'question' => $question,
+         'options' => json_encode($options),
+         'is_anonymous' => $isAnonymous,
+         'type' => $type,
+         'allows_multiple_answers' => $allowsMultipleAnswers,
+         'correct_option_id' => $correctOptionId,
+         'explanation' => $explanation,
+         'explanation_parse_mode' => $explanationParseMode,
+         'open_period' => $openPeriod,
+         'close_date' => $closeDate,
       ]);
 
       return $response->json();
