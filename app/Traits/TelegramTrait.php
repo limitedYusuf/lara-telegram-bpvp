@@ -414,4 +414,25 @@ trait TelegramTrait
 
       return $response->json();
    }
+
+   public function sendVideoNote($chatId, $videoNote, $duration = 0, $length = 0, $thumb = null, $caption = '')
+   {
+      $url = $this->getApiUrl() . '/sendVideoNote';
+
+      $data = [
+         'chat_id' => $chatId,
+         'video_note' => file_get_contents($videoNote),
+         'duration' => $duration,
+         'length' => $length,
+         'caption' => $caption,
+      ];
+
+      if ($thumb !== null) {
+         $data['thumb'] = file_get_contents($thumb);
+      }
+
+      $response = Http::post($url, $data);
+
+      return $response->json();
+   }
 }
