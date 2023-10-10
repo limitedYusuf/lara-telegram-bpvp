@@ -43,7 +43,7 @@ Route::post('/send-file', function () {
     $photo = request()->file('photo');
 
     if ($photo->isValid()) {
-        $response = Telegram::sendPhoto([
+        Telegram::setAsyncRequest(true)->sendPhoto([
             'chat_id' => env('CHANNEL_ID'),
             'photo' => InputFile::create($photo->getPathname(), $photo->getClientOriginalName()),
             'caption' => $caption,
