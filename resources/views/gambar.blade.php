@@ -7,15 +7,15 @@
    <title>File</title>
 </head>
 <body>
-   <form method="POST" action="/send-file" enctype="multipart/form-data">
+   <form method="POST" action="/send-gambar" enctype="multipart/form-data">
       @csrf
       <label for="caption">Caption:</label>
       <input type="text" name="caption" required>
       
-      <label for="photo">Foto/File:</label>
+      <label for="photo">Foto:</label>
       <input type="file" name="photo" accept="image/*,application/pdf" required>
       
-      <button type="submit">Kirim File</button>
+      <button type="submit">Kirim Foto</button>
   </form>
 </body>
 </html>

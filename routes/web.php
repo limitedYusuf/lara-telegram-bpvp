@@ -1,8 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use Telegram\Bot\FileUpload\InputFile;
-use Telegram\Bot\Laravel\Facades\Telegram;
+use App\Http\Controllers\TelegramController;
 
 /*
 |--------------------------------------------------------------------------
@@ -15,42 +14,13 @@ use Telegram\Bot\Laravel\Facades\Telegram;
 |
 */
 
-Route::get('/', function () {
-    $response = Telegram::bot('mybot')->getMe();
-    return dd($response);
-});
+Route::get('/', [TelegramController::class, 'index']);
 
-Route::get('/chat', function () {
-    return view('chat');
-});
+Route::get('/chat', [TelegramController::class, 'chat']);
+Route::post('/send-chat', [TelegramController::class, 'sendChat']);
 
-Route::post('/send-chat', function () {
-    $response = Telegram::sendMessage([
-        'chat_id' => env('CHANNEL_ID'),
-        'text' => request()->input('message'),
-    ]);
+Route::get('/gambar', [TelegramController::class, 'gambar']);
+Route::post('/send-gambar', [TelegramController::class, 'sendGambar']);
 
-    // dd($response->getMessageId());
-    return "Text sudah dikirim";
-});
-
-Route::get('/file', function () {
-    return view('file');
-});
-
-Route::post('/send-file', function () {
-    $caption = request()->input('caption');
-    $photo = request()->file('photo');
-
-    if ($photo->isValid()) {
-        Telegram::setAsyncRequest(true)->sendPhoto([
-            'chat_id' => env('CHANNEL_ID'),
-            'photo' => InputFile::create($photo->getPathname(), $photo->getClientOriginalName()),
-            'caption' => $caption,
-        ]);
-
-        return "Foto berhasil dikirim ke channel Telegram dengan caption.";
-    } else {
-        return "Gagal mengunggah foto.";
-    }
-});
+Route::get('/dokumen', [TelegramController::class, 'dokumen']);
+Route::post('/send-dokumen', [TelegramController::class, 'sendDokumen']);
