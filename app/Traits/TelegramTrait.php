@@ -160,4 +160,55 @@ trait TelegramTrait
 
       return $response->json();
    }
+
+   public function sendInvoice($chatId, $title, $description, $payload, $providerToken, $startParameter, $currency, $prices)
+   {
+      $url = $this->getApiUrl() . '/sendInvoice';
+
+      $response = Http::post($url, [
+         'chat_id' => $chatId,
+         'title' => $title,
+         'description' => $description,
+         'payload' => $payload,
+         'provider_token' => $providerToken,
+         'start_parameter' => $startParameter,
+         'currency' => $currency,
+         'prices' => json_encode($prices),
+      ]);
+
+      return $response->json();
+   }
+
+   public function getChat($chatId)
+   {
+      $url = $this->getApiUrl() . '/getChat';
+
+      $response = Http::post($url, [
+         'chat_id' => $chatId,
+      ]);
+
+      return $response->json();
+   }
+
+   public function getChatMemberCount($chatId)
+   {
+      $url = $this->getApiUrl() . '/getChatMemberCount';
+
+      $response = Http::post($url, [
+         'chat_id' => $chatId,
+      ]);
+
+      return $response->json();
+   }
+
+   public function setMyCommands($commands)
+   {
+      $url = $this->getApiUrl() . '/setMyCommands';
+
+      $response = Http::post($url, [
+         'commands' => json_encode($commands),
+      ]);
+
+      return $response->json();
+   }
 }
