@@ -211,4 +211,23 @@ trait TelegramTrait
 
       return $response->json();
    }
+
+   public function setChatMenuButton($chatId, $menuText, $menuButtons)
+   {
+      $url = $this->getApiUrl() . '/sendMessage';
+
+      $keyboard = [
+         'keyboard' => $menuButtons,
+         'resize_keyboard' => true,
+         'one_time_keyboard' => true,
+      ];
+
+      $response = Http::post($url, [
+         'chat_id' => $chatId,
+         'text' => $menuText,
+         'reply_markup' => json_encode($keyboard),
+      ]);
+
+      return $response->json();
+   }
 }
