@@ -4,7 +4,10 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Traits\TelegramTrait;
+use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Http;
+use Telegram\Bot\Laravel\Facades\Telegram;
 
 class TelegramController extends Controller
 {
@@ -68,5 +71,23 @@ class TelegramController extends Controller
         } else {
             return "Gagal mengunggah file.";
         }
+    }
+
+    public function setWebhook()
+    {
+        $response = Telegram::setWebhook(['url' => env('TELE_WEB')]);
+        dd($response);
+    }
+
+    public function commandHandlerWebHook()
+    {
+        $updates = Telegram::commandsHandler(true);
+        $chat_id = $updates->getChat()->getId();
+        $username = $updates->getChat()->getFirstName();
+
+        if (strtolower($updates->getMessage()->getText() === 'siapakah yusuf?')) return Telegram::sendMessage([
+            'chat_id' => $chat_id,
+            'text' => 'Yusuf merupakan orang tampan dan sangat ramah kepada orang lain, suka menolong & membantu. Beliau merupakan haters wibu garis keras'
+        ]);
     }
 }
