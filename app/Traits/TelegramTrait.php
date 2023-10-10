@@ -342,4 +342,16 @@ trait TelegramTrait
 
       return $response->json();
    }
+
+   public function deleteMessage($chatId, $messageId)
+   {
+      $url = $this->getApiUrl() . '/deleteMessage';
+
+      $response = Http::post($url, [
+         'chat_id' => $chatId,
+         'message_id' => $messageId,
+      ]);
+
+      return $response->json();
+   }
 }
