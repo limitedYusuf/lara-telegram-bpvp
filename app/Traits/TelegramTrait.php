@@ -329,4 +329,17 @@ trait TelegramTrait
 
       return $response->json();
    }
+
+   public function editMessageText($chatId, $messageId, $text)
+   {
+      $url = $this->getApiUrl() . '/editMessageText';
+
+      $response = Http::post($url, [
+         'chat_id' => $chatId,
+         'message_id' => $messageId,
+         'text' => $text,
+      ]);
+
+      return $response->json();
+   }
 }
