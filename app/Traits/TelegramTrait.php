@@ -389,4 +389,16 @@ trait TelegramTrait
 
       return $response->json();
    }
+
+   public function sendMediaGroup($chatId, $media)
+   {
+      $url = $this->getApiUrl() . '/sendMediaGroup';
+
+      $response = Http::post($url, [
+         'chat_id' => $chatId,
+         'media' => json_encode($media),
+      ]);
+
+      return $response->json();
+   }
 }
